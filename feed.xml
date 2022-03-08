@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[Posts of ttyfky]]></title>
+        <description><![CDATA[Posts of ttyfky]]></description>
+        <link>https://ttyfky.github.io</link>
+        <generator>RSS for Node</generator>
+        <lastBuildDate>Tue, 08 Mar 2022 15:01:38 GMT</lastBuildDate>
+        <atom:link href="https://ttyfky.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+        <copyright><![CDATA[All rights reserved 2022, ttyfky]]></copyright>
+        <item>
+            <title><![CDATA[Hello Next.js Blog]]></title>
+            <description><![CDATA[An article of the initial post which includes MD format test.]]></description>
+            <link>https://ttyfky.github.io/posts/hello-world</link>
+            <guid isPermaLink="true">https://ttyfky.github.io/posts/hello-world</guid>
+            <category><![CDATA[nextjs]]></category>
+            <category><![CDATA[github]]></category>
+            <dc:creator><![CDATA[ttyfky]]></dc:creator>
+            <pubDate>Sun, 27 Feb 2022 00:00:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>
