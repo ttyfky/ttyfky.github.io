@@ -1,0 +1,195 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"/><meta charSet="utf-8"/><link rel="icon shortcut" type="image/png" href="https://ttyfky.github.io/logo.png"/><meta property="og:title" content="データ処理基盤構築プラクティス"/><meta property="og:url" content="https://ttyfky.github.io/posts/building-data-platrofm"/><meta name="twitter:card" content="summary_large_image"/><meta property="og:site" content="ttyfky.github.io"/><meta property="og:image" content="https://ttyfky.github.io/og.png"/><meta name="description" content="データ処理基盤を構築する"/><meta property="og:description" content="データ処理基盤を構築する"/><link rel="canonical" href="https://ttyfky.github.io/posts/building-data-platrofm"/><title>データ処理基盤構築プラクティス</title><meta name="next-head-count" content="13"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link rel="preload" href="/_next/static/css/da4eb2dbe38419bd.css" as="style"/><link rel="stylesheet" href="/_next/static/css/da4eb2dbe38419bd.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-5cd94c89d3acac5f.js"></script><script src="/_next/static/chunks/webpack-d7b038a63b619762.js" defer=""></script><script src="/_next/static/chunks/framework-5f4595e5518b5600.js" defer=""></script><script src="/_next/static/chunks/main-c586b89e07064d4a.js" defer=""></script><script src="/_next/static/chunks/pages/_app-3b95a20da9395822.js" defer=""></script><script src="/_next/static/chunks/pages/posts/%5Bslug%5D-c261a5dedd17a587.js" defer=""></script><script src="/_next/static/wB8IX3Et2-SdGAAN0jm9K/_buildManifest.js" defer=""></script><script src="/_next/static/wB8IX3Et2-SdGAAN0jm9K/_ssgManifest.js" defer=""></script><script src="/_next/static/wB8IX3Et2-SdGAAN0jm9K/_middlewareManifest.js" defer=""></script><style data-href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZs.woff) format('woff')}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYMZs.woff) format('woff')}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2ZL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+1F00-1FFF}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1pL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0370-03FF}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2pL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2ZL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+1F00-1FFF}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1pL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0370-03FF}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2pL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v8/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}</style></head><body><div id="__next" data-reactroot=""><header class="site-header"><div class="content-wrapper"><div class="site-header__inner"><a class="site-header__logo-link" href="/"><img src="/avatars/profile.jpg" alt="ttyfky.github.io" class="site-header__logo-img"/><h3 class="site-header__title">ttyfky.github.io</h3></a><div class="site-header__links"><a class="site-header__link" href="/">Home</a><a class="site-header__link" href="/bio">Bio</a></div></div></div></header><div class="content-wrapper"><article class="posts__body"><h1>データ処理基盤構築プラクティス</h1><div class="posts__date">2022-03-14<ul class="tag__ul"><li class="tag__li"><a class="tag__link" href="/tags/engineering">#engineering</a></li><li class="tag__li"><a class="tag__link" href="/tags/data">#data</a></li><li class="tag__li"><a class="tag__link" href="/tags/dwh">#dwh</a></li></ul></div><br/><div><h1 id="overview">Overview</h1>
+<p>本記事ではデータプラットフォームを構築するのに考慮の必要なポイントについてまとめた。</p>
+<p>データプラットフォームに関わる基本的な概念に関しては<a href="data-platform-fundamental">データ処理基盤に関わる基本概念</a>で触れている。</p>
+<h1 id="データパイプラインの構築">データパイプラインの構築</h1>
+<p>データ処理基盤のパイプライン構築には下記のようなステップを踏む</p>
+<ol>
+<li>データ収集</li>
+<li>DWH 作成</li>
+<li>データマート作成</li>
+</ol>
+<h2 id="データ収集">データ収集</h2>
+<p>データレイクを構築する為にはデータソースからデータを収集する必要がある。
+データソースは色々な形式が考えられ、RDB である場合や CSV, API, 外部の Web サイトをスクレイピングする場合もあり、データソース毎にそれぞれデータ収集の形式が異なる。</p>
+<p>データ収集において気にするポイント</p>
+<ul>
+<li>負荷
+<ul>
+<li>DB にクエリを発行する場合に負荷が高まらないか。深夜のユーザーが利用しない時間帯に行うべきか、Read Only などマスタ以外のインスタンスを使うべきか</li>
+<li>API の連続呼び出し負荷</li>
+<li>Web サイトの更新負荷</li>
+</ul>
+</li>
+<li>PII <sup><a href="#user-content-fn-pii" id="user-content-fnref-pii" data-footnote-ref aria-describedby="footnote-label">1</a></sup>
+<ul>
+<li>PII は含むべきか、マスキングするべきか</li>
+</ul>
+</li>
+</ul>
+<h3 id="ファイルデータ">ファイルデータ</h3>
+<p>CSV や s/s などのデータの取り込み</p>
+<ul>
+<li>ファイルの更新通知を設けることでファイルの作成過程などでの誤読み取りを防ぐ
+<ul>
+<li>GCS などのオブジェクトストレージを用い、トリガー機能を利用すると良い</li>
+</ul>
+</li>
+<li>ファイル内の構造が変わる可能性がある場合にはカラムなどの情報を持つメタデータを別途用いる</li>
+<li>AVRO を用いるとデータの型などを厳密に定義できる
+<ul>
+<li>JSON などと違いデータの中身を確認しづらいというデメリット</li>
+</ul>
+</li>
+</ul>
+<h4 id="データのサイズに注意する">データのサイズに注意する</h4>
+<ul>
+<li>JSON はキーをすべて保持する必要がある</li>
+<li>CSV はキーを毎回書く必要がないため JSON と比べてデータ量が少なくなる</li>
+<li>データ量を減らしたい場合は <a href="https://parquet.apache.org/documentation/latest/">Parquet</a> を用いると良い
+<ul>
+<li>データをテキストでなくバイナリで表現</li>
+<li>列指向でデータを圧縮</li>
+<li>高効率なカラム単位の圧縮と、異なるデータの種類の列に対応する柔軟な符号化方式を採用</li>
+</ul>
+</li>
+<li>BigQuery などは gzip などで圧縮したデータを読み込める</li>
+</ul>
+<h3 id="api">API</h3>
+<p>API を通したデータの取得に関して。</p>
+<ul>
+<li>一定期間の実行回数、Quota に注意する</li>
+<li>API Key の期限切れに注意する</li>
+</ul>
+<h3 id="データベース">データベース</h3>
+<p>データベースを利用したデータ取得に関して。</p>
+<ul>
+<li>データサイズが大きい場合は fetch や、limit &#x26; offset などを利用する</li>
+<li>更新データの データレイク・DWH 内での取り扱いに注意する
+<ul>
+<li>DWH を扱うようなプロダクトは更新処理が苦手な場合が多い。一時保存先を設けて上書き更新するなど工夫が必要な場合がある</li>
+</ul>
+</li>
+</ul>
+<h4 id="データ取得のアプローチ">データ取得のアプローチ</h4>
+<ol>
+<li>SQL
+<ul>
+<li>SQL でデータを直接抽出</li>
+<li>扱うデータ量やクエリ次第では負荷が高まる</li>
+</ul>
+</li>
+<li>エクスポート
+<ul>
+<li>データをファイルにエクスポートしてファイルからデータを取得</li>
+<li>DB 負荷を抑えられる</li>
+<li>データサイズが大きくなりがち</li>
+</ul>
+</li>
+<li>ダンプファイル
+<ul>
+<li>バイナリ形式のためデータサイズが抑えられる</li>
+<li>復元用の DB が必要
+<ul>
+<li>本番 DB には負荷を与えない</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>更新ログ
+<ul>
+<li>MySQL でいうバイナリログなどの更新ログを利用する
+<ul>
+<li>復元用 DB に取り込む</li>
+</ul>
+</li>
+<li>収集するデータ量が少なくなるのが最大のメリット</li>
+<li>仕組みの構築が複雑になるのがデメリット</li>
+</ul>
+</li>
+</ol>
+<h3 id="ログ">ログ</h3>
+<p>ログを利用したデータ取得に関して。</p>
+<p>ログからは以下のような情報が取得できる。</p>
+<ul>
+<li>アクセス先 URL</li>
+<li>アクセス時間</li>
+<li>リクエスト内容</li>
+<li>ユーザーエージェント</li>
+<li>アプリケーションの文脈を含む情報</li>
+</ul>
+<p>ログ情報収集のアプローチとしては以下の選択肢がある。</p>
+<ol>
+<li>アプリケーション Log を普通に出力しログの処理ツールからデータレイクに流し込む
+<ul>
+<li>GCP なら Cloud Logging -> Log Sink -> GCS / BigQuery のような形</li>
+</ul>
+</li>
+<li>アプリケーション側でメッセージキューに対して必要な情報だけ出力する
+<ul>
+<li>Application -> Pub/Sub -> (Dataflow) -> GCS / BigQuery のような形</li>
+</ul>
+</li>
+</ol>
+<h2 id="データレイク構築">データレイク構築</h2>
+<ul>
+<li>データを加工せずそのまま保存する
+<ul>
+<li>データ損失を防ぐ</li>
+<li>機密情報や個人情報は必要に応じてマスキングを行う</li>
+</ul>
+</li>
+</ul>
+<h3 id="データの保存方針">データの保存方針</h3>
+<ul>
+<li>ファイルはオブジェクトストレージに置く
+<ul>
+<li>ライフサイクルを導入し過去のものはティアを下げ利用料金を抑えるなどする</li>
+<li>圧縮しファイルサイズを抑える</li>
+</ul>
+</li>
+<li>CSV や JSON は DB に入れる事も選択肢に入る
+<ul>
+<li>BigQuery などは JSON を扱うのも得意</li>
+</ul>
+</li>
+</ul>
+<h2 id="dwh-構築">DWH 構築</h2>
+<ul>
+<li>行指向の RDB ではなく 列指向の DB の方がデータ抽出・集計に向いている
+<ul>
+<li>自分は現状 BigQuery 一択</li>
+</ul>
+</li>
+<li>列指向の DB は更新などは不向き(出来ないものも有る)ので運用は気をつける</li>
+</ul>
+<h3 id="大量データの分散処理">大量データの分散処理</h3>
+<p>データレイクや DWH から ETL を行う場合には大量のデータを扱うことも珍しくない。
+複数マシンを用いてスケールアウトしやすい <a href="https://spark.apache.org/">Spark</a> や <a href="https://flink.apache.org/">Flink</a> 、 GCP であれば <a href="https://cloud.google.com/dataflow">Dataflow</a> を用いてスケーラブルなアプローチで分散処理を行う。</p>
+<p>パイプライン構築時には予め分散処理を前提にしておくと良い。
+最初はデータ量が少なく必要がないかもしれないが、予め大規模分散処理を行いやすいアーキテクチャで構築すると少量のデータも扱え、後々データが増えた場合にも簡単に対応できる。</p>
+<h1 id="アーキテクチャ">アーキテクチャ</h1>
+<p>データ処理基盤を構築するための代表的なアーキテクチャ</p>
+<h2 id="ラムダアーキテクチャ">ラムダアーキテクチャ</h2>
+<p>バッチ処理(バッチレイヤー)とストリーム処理(スピードレイヤー)に分けてデータを処理する。</p>
+<ul>
+<li>バッチレイヤー (コールドパス) は、すべての受信データを未加工の形式で保存し、データに対してバッチ処理を実行する。 処理の結果はバッチビューとして保存される</li>
+<li>スピードレイヤー (ホットパス) では、リアルタイムでデータを分析する このレイヤーは、精度と引き換えに待機時間が短くなるように設計されている</li>
+<li>バッチレイヤーは効率的なクエリのためにバッチビューにインデックスを付けるサービスレイヤーにフィードし、スピードレイヤーは最新のデータに基づく増分更新でサービスレイヤーを更新する</li>
+</ul>
+<h2 id="カッパアーキテクチャ">カッパアーキテクチャ</h2>
+<p>ラムダアーキテクチャと基本的な目標は同じだが、ストリーム処理システムを使用してすべてのデータが単一のパスを経由するという違いがある。
+ラムダアーキテクチャは2つの異なる場所をデータが通るため計算ロジックが複雑になるのが課題だったが、それを解決した。</p>
+<h1 id="参考">参考</h1>
+<ul>
+<li><a href="https://amzn.to/3q1V4xl">実践的データ基盤への処方箋〜 ビジネス価値創出のためのデータ・システム・ヒトのノウハウ</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/architecture/data-guide/big-data/">ビッグ データ アーキテクチャ</a></li>
+<li><a href="https://services.google.com/fh/files/misc/bring-data-lakes-and-data-warehouses-together.pdf">Converging Architectures: Bringing Data Lakes and Data Warehouses Together</a></li>
+<li><a href="https://cloud.google.com/architecture/build-a-data-lake-on-gcp">データレイクとしての Cloud Storage</a></li>
+</ul>
+<section data-footnotes class="footnotes"><h2 id="footnote-label" class="sr-only">Footnotes</h2>
+<ol>
+<li id="user-content-fn-pii">
+<p>Personally Identifiable Information、 個人情報 <a href="#user-content-fnref-pii" data-footnote-backref class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+</ol>
+</section></div></article></div><footer class="site-footer"><div class="content-wrapper"><p>© <!-- -->ttyfky</p></div></footer></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"slug":"building-data-platrofm","postData":{"id":"building-data-platrofm","contentHtml":"\u003ch1 id=\"overview\"\u003eOverview\u003c/h1\u003e\n\u003cp\u003e本記事ではデータプラットフォームを構築するのに考慮の必要なポイントについてまとめた。\u003c/p\u003e\n\u003cp\u003eデータプラットフォームに関わる基本的な概念に関しては\u003ca href=\"data-platform-fundamental\"\u003eデータ処理基盤に関わる基本概念\u003c/a\u003eで触れている。\u003c/p\u003e\n\u003ch1 id=\"データパイプラインの構築\"\u003eデータパイプラインの構築\u003c/h1\u003e\n\u003cp\u003eデータ処理基盤のパイプライン構築には下記のようなステップを踏む\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003eデータ収集\u003c/li\u003e\n\u003cli\u003eDWH 作成\u003c/li\u003e\n\u003cli\u003eデータマート作成\u003c/li\u003e\n\u003c/ol\u003e\n\u003ch2 id=\"データ収集\"\u003eデータ収集\u003c/h2\u003e\n\u003cp\u003eデータレイクを構築する為にはデータソースからデータを収集する必要がある。\nデータソースは色々な形式が考えられ、RDB である場合や CSV, API, 外部の Web サイトをスクレイピングする場合もあり、データソース毎にそれぞれデータ収集の形式が異なる。\u003c/p\u003e\n\u003cp\u003eデータ収集において気にするポイント\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e負荷\n\u003cul\u003e\n\u003cli\u003eDB にクエリを発行する場合に負荷が高まらないか。深夜のユーザーが利用しない時間帯に行うべきか、Read Only などマスタ以外のインスタンスを使うべきか\u003c/li\u003e\n\u003cli\u003eAPI の連続呼び出し負荷\u003c/li\u003e\n\u003cli\u003eWeb サイトの更新負荷\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003ePII \u003csup\u003e\u003ca href=\"#user-content-fn-pii\" id=\"user-content-fnref-pii\" data-footnote-ref aria-describedby=\"footnote-label\"\u003e1\u003c/a\u003e\u003c/sup\u003e\n\u003cul\u003e\n\u003cli\u003ePII は含むべきか、マスキングするべきか\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3 id=\"ファイルデータ\"\u003eファイルデータ\u003c/h3\u003e\n\u003cp\u003eCSV や s/s などのデータの取り込み\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eファイルの更新通知を設けることでファイルの作成過程などでの誤読み取りを防ぐ\n\u003cul\u003e\n\u003cli\u003eGCS などのオブジェクトストレージを用い、トリガー機能を利用すると良い\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003eファイル内の構造が変わる可能性がある場合にはカラムなどの情報を持つメタデータを別途用いる\u003c/li\u003e\n\u003cli\u003eAVRO を用いるとデータの型などを厳密に定義できる\n\u003cul\u003e\n\u003cli\u003eJSON などと違いデータの中身を確認しづらいというデメリット\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch4 id=\"データのサイズに注意する\"\u003eデータのサイズに注意する\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003eJSON はキーをすべて保持する必要がある\u003c/li\u003e\n\u003cli\u003eCSV はキーを毎回書く必要がないため JSON と比べてデータ量が少なくなる\u003c/li\u003e\n\u003cli\u003eデータ量を減らしたい場合は \u003ca href=\"https://parquet.apache.org/documentation/latest/\"\u003eParquet\u003c/a\u003e を用いると良い\n\u003cul\u003e\n\u003cli\u003eデータをテキストでなくバイナリで表現\u003c/li\u003e\n\u003cli\u003e列指向でデータを圧縮\u003c/li\u003e\n\u003cli\u003e高効率なカラム単位の圧縮と、異なるデータの種類の列に対応する柔軟な符号化方式を採用\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003eBigQuery などは gzip などで圧縮したデータを読み込める\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3 id=\"api\"\u003eAPI\u003c/h3\u003e\n\u003cp\u003eAPI を通したデータの取得に関して。\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e一定期間の実行回数、Quota に注意する\u003c/li\u003e\n\u003cli\u003eAPI Key の期限切れに注意する\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3 id=\"データベース\"\u003eデータベース\u003c/h3\u003e\n\u003cp\u003eデータベースを利用したデータ取得に関して。\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eデータサイズが大きい場合は fetch や、limit \u0026#x26; offset などを利用する\u003c/li\u003e\n\u003cli\u003e更新データの データレイク・DWH 内での取り扱いに注意する\n\u003cul\u003e\n\u003cli\u003eDWH を扱うようなプロダクトは更新処理が苦手な場合が多い。一時保存先を設けて上書き更新するなど工夫が必要な場合がある\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch4 id=\"データ取得のアプローチ\"\u003eデータ取得のアプローチ\u003c/h4\u003e\n\u003col\u003e\n\u003cli\u003eSQL\n\u003cul\u003e\n\u003cli\u003eSQL でデータを直接抽出\u003c/li\u003e\n\u003cli\u003e扱うデータ量やクエリ次第では負荷が高まる\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003eエクスポート\n\u003cul\u003e\n\u003cli\u003eデータをファイルにエクスポートしてファイルからデータを取得\u003c/li\u003e\n\u003cli\u003eDB 負荷を抑えられる\u003c/li\u003e\n\u003cli\u003eデータサイズが大きくなりがち\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003eダンプファイル\n\u003cul\u003e\n\u003cli\u003eバイナリ形式のためデータサイズが抑えられる\u003c/li\u003e\n\u003cli\u003e復元用の DB が必要\n\u003cul\u003e\n\u003cli\u003e本番 DB には負荷を与えない\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003e更新ログ\n\u003cul\u003e\n\u003cli\u003eMySQL でいうバイナリログなどの更新ログを利用する\n\u003cul\u003e\n\u003cli\u003e復元用 DB に取り込む\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003e収集するデータ量が少なくなるのが最大のメリット\u003c/li\u003e\n\u003cli\u003e仕組みの構築が複雑になるのがデメリット\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ol\u003e\n\u003ch3 id=\"ログ\"\u003eログ\u003c/h3\u003e\n\u003cp\u003eログを利用したデータ取得に関して。\u003c/p\u003e\n\u003cp\u003eログからは以下のような情報が取得できる。\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eアクセス先 URL\u003c/li\u003e\n\u003cli\u003eアクセス時間\u003c/li\u003e\n\u003cli\u003eリクエスト内容\u003c/li\u003e\n\u003cli\u003eユーザーエージェント\u003c/li\u003e\n\u003cli\u003eアプリケーションの文脈を含む情報\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eログ情報収集のアプローチとしては以下の選択肢がある。\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003eアプリケーション Log を普通に出力しログの処理ツールからデータレイクに流し込む\n\u003cul\u003e\n\u003cli\u003eGCP なら Cloud Logging -\u003e Log Sink -\u003e GCS / BigQuery のような形\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003eアプリケーション側でメッセージキューに対して必要な情報だけ出力する\n\u003cul\u003e\n\u003cli\u003eApplication -\u003e Pub/Sub -\u003e (Dataflow) -\u003e GCS / BigQuery のような形\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ol\u003e\n\u003ch2 id=\"データレイク構築\"\u003eデータレイク構築\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eデータを加工せずそのまま保存する\n\u003cul\u003e\n\u003cli\u003eデータ損失を防ぐ\u003c/li\u003e\n\u003cli\u003e機密情報や個人情報は必要に応じてマスキングを行う\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3 id=\"データの保存方針\"\u003eデータの保存方針\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003eファイルはオブジェクトストレージに置く\n\u003cul\u003e\n\u003cli\u003eライフサイクルを導入し過去のものはティアを下げ利用料金を抑えるなどする\u003c/li\u003e\n\u003cli\u003e圧縮しファイルサイズを抑える\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003eCSV や JSON は DB に入れる事も選択肢に入る\n\u003cul\u003e\n\u003cli\u003eBigQuery などは JSON を扱うのも得意\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2 id=\"dwh-構築\"\u003eDWH 構築\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003e行指向の RDB ではなく 列指向の DB の方がデータ抽出・集計に向いている\n\u003cul\u003e\n\u003cli\u003e自分は現状 BigQuery 一択\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003e列指向の DB は更新などは不向き(出来ないものも有る)ので運用は気をつける\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3 id=\"大量データの分散処理\"\u003e大量データの分散処理\u003c/h3\u003e\n\u003cp\u003eデータレイクや DWH から ETL を行う場合には大量のデータを扱うことも珍しくない。\n複数マシンを用いてスケールアウトしやすい \u003ca href=\"https://spark.apache.org/\"\u003eSpark\u003c/a\u003e や \u003ca href=\"https://flink.apache.org/\"\u003eFlink\u003c/a\u003e 、 GCP であれば \u003ca href=\"https://cloud.google.com/dataflow\"\u003eDataflow\u003c/a\u003e を用いてスケーラブルなアプローチで分散処理を行う。\u003c/p\u003e\n\u003cp\u003eパイプライン構築時には予め分散処理を前提にしておくと良い。\n最初はデータ量が少なく必要がないかもしれないが、予め大規模分散処理を行いやすいアーキテクチャで構築すると少量のデータも扱え、後々データが増えた場合にも簡単に対応できる。\u003c/p\u003e\n\u003ch1 id=\"アーキテクチャ\"\u003eアーキテクチャ\u003c/h1\u003e\n\u003cp\u003eデータ処理基盤を構築するための代表的なアーキテクチャ\u003c/p\u003e\n\u003ch2 id=\"ラムダアーキテクチャ\"\u003eラムダアーキテクチャ\u003c/h2\u003e\n\u003cp\u003eバッチ処理(バッチレイヤー)とストリーム処理(スピードレイヤー)に分けてデータを処理する。\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eバッチレイヤー (コールドパス) は、すべての受信データを未加工の形式で保存し、データに対してバッチ処理を実行する。 処理の結果はバッチビューとして保存される\u003c/li\u003e\n\u003cli\u003eスピードレイヤー (ホットパス) では、リアルタイムでデータを分析する このレイヤーは、精度と引き換えに待機時間が短くなるように設計されている\u003c/li\u003e\n\u003cli\u003eバッチレイヤーは効率的なクエリのためにバッチビューにインデックスを付けるサービスレイヤーにフィードし、スピードレイヤーは最新のデータに基づく増分更新でサービスレイヤーを更新する\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2 id=\"カッパアーキテクチャ\"\u003eカッパアーキテクチャ\u003c/h2\u003e\n\u003cp\u003eラムダアーキテクチャと基本的な目標は同じだが、ストリーム処理システムを使用してすべてのデータが単一のパスを経由するという違いがある。\nラムダアーキテクチャは2つの異なる場所をデータが通るため計算ロジックが複雑になるのが課題だったが、それを解決した。\u003c/p\u003e\n\u003ch1 id=\"参考\"\u003e参考\u003c/h1\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca href=\"https://amzn.to/3q1V4xl\"\u003e実践的データ基盤への処方箋〜 ビジネス価値創出のためのデータ・システム・ヒトのノウハウ\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://docs.microsoft.com/ja-jp/azure/architecture/data-guide/big-data/\"\u003eビッグ データ アーキテクチャ\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://services.google.com/fh/files/misc/bring-data-lakes-and-data-warehouses-together.pdf\"\u003eConverging Architectures: Bringing Data Lakes and Data Warehouses Together\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://cloud.google.com/architecture/build-a-data-lake-on-gcp\"\u003eデータレイクとしての Cloud Storage\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003csection data-footnotes class=\"footnotes\"\u003e\u003ch2 id=\"footnote-label\" class=\"sr-only\"\u003eFootnotes\u003c/h2\u003e\n\u003col\u003e\n\u003cli id=\"user-content-fn-pii\"\u003e\n\u003cp\u003ePersonally Identifiable Information、 個人情報 \u003ca href=\"#user-content-fnref-pii\" data-footnote-backref class=\"data-footnote-backref\" aria-label=\"Back to content\"\u003e↩\u003c/a\u003e\u003c/p\u003e\n\u003c/li\u003e\n\u003c/ol\u003e\n\u003c/section\u003e","title":"データ処理基盤構築プラクティス","date":"2022-03-14","tags":["engineering","data","dwh"],"description":"データ処理基盤を構築する","published":true}},"__N_SSG":true},"page":"/posts/[slug]","query":{"slug":"building-data-platrofm"},"buildId":"wB8IX3Et2-SdGAAN0jm9K","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
