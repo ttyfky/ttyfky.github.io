@@ -4,9 +4,20 @@
         <description><![CDATA[Posts of ttyfky]]></description>
         <link>https://ttyfky.github.io</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 10 Mar 2022 12:24:59 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 13 Mar 2022 09:50:35 GMT</lastBuildDate>
         <atom:link href="https://ttyfky.github.io/feed.xml" rel="self" type="application/rss+xml"/>
         <copyright><![CDATA[All rights reserved 2022, ttyfky]]></copyright>
+        <item>
+            <title><![CDATA[データ処理基盤に関わる基本概念]]></title>
+            <description><![CDATA[データ処理基盤を構築するために必要な基礎知識の整理]]></description>
+            <link>https://ttyfky.github.io/posts/data-platrofm-fundamental</link>
+            <guid isPermaLink="true">https://ttyfky.github.io/posts/data-platrofm-fundamental</guid>
+            <category><![CDATA[data]]></category>
+            <category><![CDATA[dwh]]></category>
+            <category><![CDATA[engineering]]></category>
+            <dc:creator><![CDATA[ttyfky]]></dc:creator>
+            <pubDate>Sun, 13 Mar 2022 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Hello Next.js Blog]]></title>
             <description><![CDATA[An article of the initial post which includes MD format test.]]></description>
