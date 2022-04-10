@@ -5,7 +5,7 @@
         <link>https://ttyfky.github.io</link>
         <generator>RSS for Node</generator>
         <lastBuildDate>Sun, 10 Apr 2022 12:36:40 GMT</lastBuildDate>
-        <atom:link href="https://ttyfky.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="https://ttyfky.github.io/engineering/feed.xml" rel="self" type="application/rss+xml"/>
         <copyright><![CDATA[All rights reserved 2022, ttyfky]]></copyright>
         <item>
             <title><![CDATA[Data Lakehouse を理解する]]></title>
@@ -37,16 +37,6 @@
             <category><![CDATA[dwh]]></category>
             <dc:creator><![CDATA[ttyfky]]></dc:creator>
             <pubDate>Sun, 13 Mar 2022 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Hello Next.js Blog]]></title>
-            <description><![CDATA[An article of the initial post which includes MD format test.]]></description>
-            <link>https://ttyfky.github.io/posts/hello-world</link>
-            <guid isPermaLink="true">https://ttyfky.github.io/posts/hello-world</guid>
-            <category><![CDATA[github]]></category>
-            <category><![CDATA[nextjs]]></category>
-            <dc:creator><![CDATA[ttyfky]]></dc:creator>
-            <pubDate>Sun, 27 Feb 2022 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
