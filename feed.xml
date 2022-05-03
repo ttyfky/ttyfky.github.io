@@ -4,9 +4,18 @@
         <description><![CDATA[Posts of ttyfky]]></description>
         <link>https://ttyfky.github.io</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Sat, 30 Apr 2022 06:16:03 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 03 May 2022 04:16:46 GMT</lastBuildDate>
         <atom:link href="https://ttyfky.github.io/feed.xml" rel="self" type="application/rss+xml"/>
         <copyright><![CDATA[All rights reserved 2022, ttyfky]]></copyright>
+        <item>
+            <title><![CDATA[ソフトウェアアーキテクチャの基礎を受けてアーキテクトのあり方を整理]]></title>
+            <description><![CDATA[「ソフトウェアアーキテクチャの基礎」を受けてソフトウェアアーキテクトとして理解するべきことに触れる]]></description>
+            <link>https://ttyfky.github.io/posts/software-architecture-fundamentals</link>
+            <guid isPermaLink="true">https://ttyfky.github.io/posts/software-architecture-fundamentals</guid>
+            <category><![CDATA[architecture]]></category>
+            <dc:creator><![CDATA[ttyfky]]></dc:creator>
+            <pubDate>Tue, 03 May 2022 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Data Lakehouse を理解する]]></title>
             <description><![CDATA[Data Lakehouse についての概要説明とクラウドベンダーごとのアプローチについて]]></description>
