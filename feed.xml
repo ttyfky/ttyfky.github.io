@@ -4,9 +4,20 @@
         <description><![CDATA[Posts of ttyfky]]></description>
         <link>https://ttyfky.github.io</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Tue, 02 May 2023 09:42:24 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 07 Aug 2023 01:59:49 GMT</lastBuildDate>
         <atom:link href="https://ttyfky.github.io/feed.xml" rel="self" type="application/rss+xml"/>
         <copyright><![CDATA[All rights reserved 2023, ttyfky]]></copyright>
+        <item>
+            <title><![CDATA[Go DDD Package Structure Pattern]]></title>
+            <description><![CDATA[Go で DDD を表現するのは単純にレイヤードにするのではなく、ドメイン毎にパッケージの見え方を意識して構成をしたほうが良いという考察。]]></description>
+            <link>https://ttyfky.github.io/posts/go-ddd-package-structure</link>
+            <guid isPermaLink="true">https://ttyfky.github.io/posts/go-ddd-package-structure</guid>
+            <category><![CDATA[ddd]]></category>
+            <category><![CDATA[engineering]]></category>
+            <category><![CDATA[go]]></category>
+            <dc:creator><![CDATA[ttyfky]]></dc:creator>
+            <pubDate>Tue, 01 Aug 2023 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[ソフトウェアアーキテクチャの基礎を受けてアーキテクトのあり方を整理]]></title>
             <description><![CDATA[「ソフトウェアアーキテクチャの基礎」を受けてソフトウェアアーキテクトとして理解するべきことに触れる]]></description>

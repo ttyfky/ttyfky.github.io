@@ -1,0 +1,257 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><link rel="icon shortcut" type="image/png" href="https://ttyfky.github.io/logo.png"/><meta property="og:title" content="Go DDD Package Structure Pattern"/><meta property="og:url" content="https://ttyfky.github.io/posts/go-ddd-package-structure"/><meta name="twitter:card" content="summary"/><meta property="og:site" content="ttyfky.github.io"/><meta property="og:image" content="https://ttyfky.github.io/og.png"/><meta name="description" content="Go で DDD を表現するのは単純にレイヤードにするのではなく、ドメイン毎にパッケージの見え方を意識して構成をしたほうが良いという考察。"/><meta property="og:description" content="Go で DDD を表現するのは単純にレイヤードにするのではなく、ドメイン毎にパッケージの見え方を意識して構成をしたほうが良いという考察。"/><link rel="canonical" href="https://ttyfky.github.io/posts/go-ddd-package-structure"/><title>Go DDD Package Structure Pattern</title><meta name="next-head-count" content="13"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link rel="preload" href="/_next/static/css/4ff6615d8fb8e460.css" as="style"/><link rel="stylesheet" href="/_next/static/css/4ff6615d8fb8e460.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script><script src="/_next/static/chunks/webpack-b8f8d6679aaa5f42.js" defer=""></script><script src="/_next/static/chunks/framework-2c79e2a64abdb08b.js" defer=""></script><script src="/_next/static/chunks/main-a0dca5a2ff5035f1.js" defer=""></script><script src="/_next/static/chunks/pages/_app-ec385de0df889461.js" defer=""></script><script src="/_next/static/chunks/880-f1d70106926f6aa4.js" defer=""></script><script src="/_next/static/chunks/pages/posts/%5Bslug%5D-1d0ae5fa11fa5e82.js" defer=""></script><script src="/_next/static/zA6gxw_dxFZp1nsazOUt-/_buildManifest.js" defer=""></script><script src="/_next/static/zA6gxw_dxFZp1nsazOUt-/_ssgManifest.js" defer=""></script><style data-href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZs.woff) format('woff')}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYMZs.woff) format('woff')}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2ZL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+1F00-1FFF}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1pL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0370-03FF}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2pL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2ZL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+1F00-1FFF}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1pL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0370-03FF}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2pL7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7W0Q5n-wU.woff2) format('woff2');unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}</style></head><body><div id="__next"><header class="site-header"><div class="content-wrapper"><div class="site-header__inner"><a class="site-header__logo-link" href="/"><img src="/avatars/profile.jpg" alt="ttyfky.github.io" class="site-header__logo-img"/><h3 class="site-header__title">ttyfky.github.io</h3></a><div class="site-header__links"><a class="site-header__link" href="/">Home</a><a class="site-header__link" href="/bio">Bio</a></div></div></div></header><div class="content-wrapper"><article class="posts__body"><h1>Go DDD Package Structure Pattern</h1><div class="posts__date">2023-08-01<ul class="tag__ul"><li class="tag__li"><a class="tag__link" href="/tags/engineering">#engineering</a></li><li class="tag__li"><a class="tag__link" href="/tags/go">#go</a></li><li class="tag__li"><a class="tag__link" href="/tags/ddd">#ddd</a></li></ul></div><br/><div><h1 id="overview">Overview</h1>
+<p>本記事は Web アプリケーションを作る場合の Go のパッケージストラクチャについての考察である。</p>
+<p>リポジトリのアーキテクチャは拡張性や認識容易性、結合度・凝縮度などに影響する。ビジネスの変化に迅速に柔軟に対応するサービスを構築するためには、エンジニア自身もビジネスドメインを理解し DDD をベースとしたアプローチが良いという考えが最近より強くなってきた。
+DDD をプログラムで表現するのはレイヤードアーキテクチャ、特に <a href="https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/" target="_blank" rel="noopener noreferrer">オニオンアーキテクチャ</a> が良いと思うが、<a href="https://www.shoeisha.co.jp/book/detail/9784798131610" target="_blank" rel="noopener noreferrer">実践ドメイン駆動設計</a> や
+<a href="https://www.kadokawa.co.jp/product/301806000678/" target="_blank" rel="noopener noreferrer">Clean Architecture</a> などの本を見たら分かる通り、レイヤード系のアーキテクチャは基本的に Java のような言語を想定して記述されている。</p>
+<p>Go はそういった言語とはパッケージの思想が異なるため、レイヤーの思想を安易に表現すると返って扱いづらい。Go は Goの特徴を考慮した形で実現するのが良いだろう。</p>
+<p>なお、ここで書かれている内容は私が関わる組織でも必ずしも実践されているわけではない。あくまで個人的な考察である。</p>
+<p>本記事を理解するために必要な知識</p>
+<ul>
+<li>Go の知識</li>
+<li>アーキテクチャの知識
+<ul>
+<li>DDD</li>
+<li>Clean Architecture</li>
+<li>Onion Architecture</li>
+</ul>
+</li>
+<li>参考となる本
+<ul>
+<li>Clean Architecture</li>
+<li>アジャイルソフトウェア開発の奥義</li>
+<li>Domain-Driven Design: Tackling Complexity in the Heart of Software</li>
+<li>実践ドメイン駆動設計</li>
+<li>Patterns of Enterprise Application Architecture (PoEAA)</li>
+</ul>
+</li>
+</ul>
+<h1 id="前提条件">前提条件</h1>
+<p>DDD を前提とした場合、重要視したいのは <a href="https://ja.wikipedia.org/wiki/SOLID" target="_blank" rel="noopener noreferrer">SOLID原則</a>、特に single-responsibility principle を重視したい。つまり、凝縮度を高めるためビジネスドメインにおける関心事を一定箇所(ドメインモデル)に閉じ込め、変更時にはその箇所を注目したら良く、同時に他のドメインへ影響を与えないようにしたい。</p>
+<p>一方で、ソフトウェア開発の原則で同様に言われる <a href="https://ja.wikipedia.org/wiki/Don%27t_repeat_yourself" target="_blank" rel="noopener noreferrer">DRY (Don&#x27;t repeat yourself )原則</a>はある意味緩める必要がある。</p>
+<p>例えば、商品(item)といった場合に販売ドメインと配送ドメインでは関心事が異なる。販売ドメインでは商品の価格や状態が関心事だが、配送ドメインにおいては同じ「商品」と言ったときでも配送先や配送状況など関心事が異なる。</p>
+<p>引用: <a href="https://little-hands.hatenablog.com/entry/2017/11/28/bouded-context-concept" target="_blank" rel="noopener noreferrer">https://little-hands.hatenablog.com/entry/2017/11/28/bouded-context-concept</a>
+<img src="./item-domain.png" alt="Item Domain"/></p>
+<p>この時、DRY を意識して商品という概念(Entity)を使いまわそうとすると、売値・状態・配送先・配送状態など異なるドメインの関心事を全て詰め込み、状況次第で利用するフィールドを変えるというアプローチになる。<br/>
+概念の異なるドメインでリソースを共有すると結合度が上がり、一方のドメインでの変更がもう一方のドメインへ意図せず影響する可能性が高まる。
+例えば商品販売の管理のため内部的な商品名の名付けルールを変えたら配送時にお客様への表示商品名のルールまで変わってしまうなどである。
+こうなると、プログラムの複雑性が高い影響で各ドメインの身動きが取りづらくなり、バグ発生率が高まり変更の実現のサイクルが遅くなってしまう。<br/>
+そこで、多少繰り返し(のような見え方)になろうとも、ドメインごとに独自のリソースを設け、変更の影響範囲を狭め、注目するべき部分を閉じ込めることを重視したい。上記例では販売・配送ごとに独自の商品モデルを定義し、各々に必要な情報だけを認知できる形にする形である。</p>
+<h1 id="go-における-ddd-の実現">Go における DDD の実現</h1>
+<p>最初に結論を紹介すると、Go では以下のような形が良いのではないかと現時点では考えている。まずは説明前に実際のストラクチャを見て欲しい。</p>
+<p>当然ながらここで例示するものが正解というわけではないし、機能の追加や時間の経過によって有用な形は代わり得る。</p>
+<h2 id="提案アーキテクチャ">提案アーキテクチャ</h2>
+<pre><code class="hljs language-go">.
+├── boundedcontextA
+│   └── usecase <span class="hljs-comment">// define application usecase</span>
+│       ├── subdomainA
+│           └── a_usecase.<span class="hljs-keyword">go</span>
+│           └── b_usecase.<span class="hljs-keyword">go</span>
+│       ├── subdomainB
+│           └── c_usecase.<span class="hljs-keyword">go</span>
+│   └── domain <span class="hljs-comment">// define domain model</span>
+│       └── subdomainA
+│           └── model.<span class="hljs-keyword">go</span> 
+│           └── repository.<span class="hljs-keyword">go</span> <span class="hljs-comment">// only interface</span>
+│           └── service.<span class="hljs-keyword">go</span>
+│       └── subdomainB
+│           └── model.<span class="hljs-keyword">go</span> 
+│           └── repository.<span class="hljs-keyword">go</span>
+│           └── service.<span class="hljs-keyword">go</span>
+│   └── presentation <span class="hljs-comment">// API endpoint</span>
+│       └── a_handler.<span class="hljs-keyword">go</span>
+│       └── b_handler.<span class="hljs-keyword">go</span>
+│       └── resolver
+│           └── resolver.<span class="hljs-keyword">go</span>
+│   └── infrastructure <span class="hljs-comment">// impliment repository</span>
+│       └── datastore
+│       └── externalservice
+│   └── pkg <span class="hljs-comment">// general lib for the boundary</span>
+│       └── apiclient
+│       └── shareditem
+│       └── trace
+│   └── <span class="hljs-keyword">go</span>.mod
+├── boundedcontextB
+│   └── usecase
+│       └── ...
+│   └── domain
+│       └── ...
+│   └── presentation
+│       └── ...
+│   └── infrastructure
+│       └── ...
+│   └── pkg
+│       └── ...
+│   └── <span class="hljs-keyword">go</span>.mod
+├── boundedcontextC
+│   └── ...
+├── server
+│   └── middleware <span class="hljs-comment">// common</span>
+│   └── main.<span class="hljs-keyword">go</span>
+├── <span class="hljs-keyword">go</span>.mod
+</code></pre>
+<p>基本的な考え方は以下である。</p>
+<p>方針</p>
+<ul>
+<li>複数の境界やドメインを同じサービスで提供し得る構成で考える</li>
+<li>struct や interface のを使う側における見え方を意識する</li>
+<li>トップレベル以下にコンテキストの境界毎にディレクトリを作る
+<ul>
+<li>小ディレクトリに近いストラクチャを持つモジュラモノリスのような構造</li>
+<li>サービスとしてモノリスで提供する前提だが、必要に応じてマイクロサービスとしてデプロイしたり、リポジトリの分離の容易さを意識</li>
+</ul>
+</li>
+</ul>
+<p>補足</p>
+<ul>
+<li>ファイル自体はわかりやすさのために定義しているが、別ファイルを設けることは必須ではなく、また同様の概念(e.g. model)を複数ファイルに分けることもある</li>
+<li>必要に応じて親・子ディレクトリを追加で設けて柔軟に変更する</li>
+<li>boundary は<code>sales</code>や<code>delivery</code>のようなビジネスドメイン的な概念もあれば<code>authentication</code>などのシステム上必要な概念もありえる</li>
+<li>boundary 毎のモジュール化は必須ではない</li>
+</ul>
+<p>提案モデルを深掘りする前に、レイヤードアーキテクチャを忠実に再現した場合にどうなるのかを例示し、追って違いを交えつつ説明する。</p>
+<p>素直なレイヤードアーキテクチャを Go で表現すると以下のようになる。</p>
+<pre><code class="hljs language-go">.
+├── usecase
+│   └── a_usecase.<span class="hljs-keyword">go</span>
+│   └── b_usecase.<span class="hljs-keyword">go</span>
+├── domain
+│   ├── model
+│   ├── repository
+│   │   └── a_repository.<span class="hljs-keyword">go</span> <span class="hljs-comment">// interface</span>
+│   └── service
+├── infrastructure
+│   └── persistence
+│       └── database
+│           └── a_repository.<span class="hljs-keyword">go</span> <span class="hljs-comment">// impl</span>
+├── presentation
+│   └── api
+│       └── server
+│           ├── auth
+│           ├── handler
+│           │   ├── a_handler.<span class="hljs-keyword">go</span>
+│           │   ├── b_handler.<span class="hljs-keyword">go</span>
+│           │   └── yyy_handler.<span class="hljs-keyword">go</span>
+│           ├── middleware
+│           └── router
+└── <span class="hljs-keyword">go</span>.mod
+</code></pre>
+<p>以下で提案アーキテクチャのポイントを説明する。</p>
+<h2 id="ポイント">ポイント</h2>
+<h3 id="各レイヤー単位でドメインを考慮したパッケージを作る">各レイヤー単位でドメインを考慮したパッケージを作る</h3>
+<p>提案の例ではレイヤー毎にフラットなディレクトリを作らないこと、またレイヤー毎に近しい要素は同じパッケージ以下に置く事を意識している。
+具体的には、model.go や repository.go を (サブ)ドメイン (以下サブドメインも全てドメインと便宜上表現する) 直下に配置している。
+こうすることで <code>{domain_name}.{element_name}</code> という見え方を表現できる。<br/>
+sale というドメイン以下で item の出品と考えると以下のように表現でき、private なフィールドの公開範囲も制限が可能である</p>
+<ul>
+<li>domain/sale/
+<ul>
+<li>sale.Item</li>
+<li>sale.Repository</li>
+</ul>
+</li>
+<li>usecase/sale/
+<ul>
+<li>sale.PublishUsecase</li>
+<li>sale.DropUsecase</li>
+</ul>
+</li>
+</ul>
+<p>他の言語ではパッケージの利用時の見え方は意識しなくても良いものもあるのだが、Go の場合は「パッケージ + 要素名」を利用時に参照することに加え、「パッケージ名は要素の名前に含めない」というプラクティス(✗ item.ItemRepository → ◯ item.Repository) もあるため、必然的に利用時のためのパッケージと要素の配置位置を意識する必要がある。</p>
+<p>レイヤードアーキテクチャを素直に表現した場合、usecase や repository ディレクトリ以下に全てのリポジトリのインターフェースが以下のように並べられる。</p>
+<pre><code class="hljs language-go">.
+├── usecase
+│   └── delivery_usecase.<span class="hljs-keyword">go</span>
+│   └── sale_usecase.<span class="hljs-keyword">go</span>
+├── domain
+│   ├── model
+│      └── delivery.<span class="hljs-keyword">go</span>
+│      └── item.<span class="hljs-keyword">go</span>
+│      └── sale.<span class="hljs-keyword">go</span>
+│   ├── repository
+│      └── delivery.<span class="hljs-keyword">go</span>
+│      └── item.<span class="hljs-keyword">go</span>
+│      └── sale.<span class="hljs-keyword">go</span>
+</code></pre>
+<p>この場合以下のような点で扱いづらさがある。</p>
+<ul>
+<li>レイヤーのディレクトリ以下に平坦にファイルを並べると特定のドメインのみに必要なプライベートな要素が他のドメインにも見える</li>
+<li>リソースを配置するディレクトリがより分散しやすくなる
+<ul>
+<li>凝縮度の低下</li>
+</ul>
+</li>
+<li>名付けで 「何であるのか(e.g. repository)」が要素でなく package の方に寄せられる
+<ul>
+<li>repository.Delivery、repository.Item &lt;&gt; delivery.Repository、item.Repository</li>
+</ul>
+</li>
+</ul>
+<p>当然以下のようにレイヤー毎にサブディレクトリを設けることも考えられるが、特にドメイン周りで近しい要素間の循環参照が起きやすく、 import の複雑性を考えたくないため、model, repository (interface), service などは同一階層上で置いてしまった方が扱い易いと考える。</p>
+<pre><code class="hljs language-go">.
+├── usecase
+│   └── delivery
+│      └── usecase.<span class="hljs-keyword">go</span>
+│   └── sale
+│      └── usecase.<span class="hljs-keyword">go</span>
+├── domain
+│   ├── model
+│      └── delivery
+│          └── delivery.<span class="hljs-keyword">go</span>
+│      └── item
+│          └── item.<span class="hljs-keyword">go</span>
+│      └── sale
+│          └── sale.<span class="hljs-keyword">go</span>
+│   ├── repository
+│      └── delivery
+│          └── delivery.<span class="hljs-keyword">go</span>
+│      └── item
+│          └── item.<span class="hljs-keyword">go</span>
+│      └── sale
+│          └── sale.<span class="hljs-keyword">go</span>
+│   ├── service
+│      └── delivery
+...
+</code></pre>
+<h3 id="bounded-context-によるモジュールの分離">Bounded context によるモジュールの分離</h3>
+<p>提案では「境界づけられたコンテキスト」毎にトップディレクトリに配置し、それぞれをモジュール化し、各モジュールを server/main.go から参照する形を想定していた。</p>
+<p>この形の利点としては以下である。</p>
+<ul>
+<li>境界の異なるものは干渉しない</li>
+<li>リリース時に境界毎の変更を意識せずリリースタイミングを調整しやすい
+<ul>
+<li>モジュール化していないとモノレポの場合、master (GitFlow なら develop)ブランチにマージすることは本番化を意味する(Feature Toggleなどを使っていない場合)が、モジュール化すると main.go の go.mod に含めない限り利用されない</li>
+</ul>
+</li>
+<li>チームやプロダクトの成長に伴うサービスの分割がしやすい
+<ul>
+<li>境界毎にサービスとして完結した形にすることで main.go を追加するだけで別サービスとしてデプロイできる
+<ul>
+<li>サービス規模が大きくなったなどでアクセスの分離がしやすい</li>
+</ul>
+</li>
+<li>メンバー増加に伴い専用のチームを作りリポジトリを分離する場合でも対応が簡単
+<ul>
+<li>レイヤー毎に分離されて配置されているとリポジトリ分離のためには複数箇所から関連リソースをかき集める必要がある</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>この方法には同時にいくつかの欠点も存在する</p>
+<ul>
+<li>モジュールとして分離すると、全体で利用したいライブラリ (共有カーネル等) をモジュール化してインポートする必要がある
+<ul>
+<li>モジュール化していない場合は変更をそのまま参照できる</li>
+</ul>
+</li>
+<li>サービスとしてのテストの手間
+<ul>
+<li>go.work によりローカルで別モジュールの開発は簡単になったが、go.work は git 管理しない前提のため、実環境へデプロイするためには main.go の go.mod が tag でなくブランチを参照する必要がある。</li>
+</ul>
+</li>
+</ul>
+<h1 id="おわりに">おわりに</h1>
+<p>本記事では Go で DDD ベースの実装を行う場合のパッケージストラクチャの案を紹介した。</p>
+<p>アプローチはチームの大きさやスキル間、サービスの特性によって変えるべきであり、例えばコンテキストを大きく捉えてサブドメインの構成要素を多くモデリングすることで細かくモジュールを分けないといった考え方もあるだろう。</p>
+<p>また、今回のストラクチャを深掘りするとコンテキスト内でも <code>saleitem</code> (売るための商品) と <code>solditem</code> (売れた商品) のドメインを設け、それぞれ別のフィールドを持たせる方が扱いやすい場合もある。</p>
+<p>一概に正解はないが、ポイントとしては Go では <code>{domain_name}.{element_name}</code> という利用者からの見え方を意識し、結合度を下げつつ凝縮度を高める設計をすると良いと考えている。</p></div></article></div><footer class="site-footer"><div class="content-wrapper"><p>© <!-- -->ttyfky</p></div></footer></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"slug":"go-ddd-package-structure","postData":{"id":"go-ddd-package-structure","contentHtml":"\u003ch1 id=\"overview\"\u003eOverview\u003c/h1\u003e\n\u003cp\u003e本記事は Web アプリケーションを作る場合の Go のパッケージストラクチャについての考察である。\u003c/p\u003e\n\u003cp\u003eリポジトリのアーキテクチャは拡張性や認識容易性、結合度・凝縮度などに影響する。ビジネスの変化に迅速に柔軟に対応するサービスを構築するためには、エンジニア自身もビジネスドメインを理解し DDD をベースとしたアプローチが良いという考えが最近より強くなってきた。\nDDD をプログラムで表現するのはレイヤードアーキテクチャ、特に \u003ca href=\"https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/\"\u003eオニオンアーキテクチャ\u003c/a\u003e が良いと思うが、\u003ca href=\"https://www.shoeisha.co.jp/book/detail/9784798131610\"\u003e実践ドメイン駆動設計\u003c/a\u003e や\n\u003ca href=\"https://www.kadokawa.co.jp/product/301806000678/\"\u003eClean Architecture\u003c/a\u003e などの本を見たら分かる通り、レイヤード系のアーキテクチャは基本的に Java のような言語を想定して記述されている。\u003c/p\u003e\n\u003cp\u003eGo はそういった言語とはパッケージの思想が異なるため、レイヤーの思想を安易に表現すると返って扱いづらい。Go は Goの特徴を考慮した形で実現するのが良いだろう。\u003c/p\u003e\n\u003cp\u003eなお、ここで書かれている内容は私が関わる組織でも必ずしも実践されているわけではない。あくまで個人的な考察である。\u003c/p\u003e\n\u003cp\u003e本記事を理解するために必要な知識\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eGo の知識\u003c/li\u003e\n\u003cli\u003eアーキテクチャの知識\n\u003cul\u003e\n\u003cli\u003eDDD\u003c/li\u003e\n\u003cli\u003eClean Architecture\u003c/li\u003e\n\u003cli\u003eOnion Architecture\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003e参考となる本\n\u003cul\u003e\n\u003cli\u003eClean Architecture\u003c/li\u003e\n\u003cli\u003eアジャイルソフトウェア開発の奥義\u003c/li\u003e\n\u003cli\u003eDomain-Driven Design: Tackling Complexity in the Heart of Software\u003c/li\u003e\n\u003cli\u003e実践ドメイン駆動設計\u003c/li\u003e\n\u003cli\u003ePatterns of Enterprise Application Architecture (PoEAA)\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1 id=\"前提条件\"\u003e前提条件\u003c/h1\u003e\n\u003cp\u003eDDD を前提とした場合、重要視したいのは \u003ca href=\"https://ja.wikipedia.org/wiki/SOLID\"\u003eSOLID原則\u003c/a\u003e、特に single-responsibility principle を重視したい。つまり、凝縮度を高めるためビジネスドメインにおける関心事を一定箇所(ドメインモデル)に閉じ込め、変更時にはその箇所を注目したら良く、同時に他のドメインへ影響を与えないようにしたい。\u003c/p\u003e\n\u003cp\u003e一方で、ソフトウェア開発の原則で同様に言われる \u003ca href=\"https://ja.wikipedia.org/wiki/Don%27t_repeat_yourself\"\u003eDRY (Don't repeat yourself )原則\u003c/a\u003eはある意味緩める必要がある。\u003c/p\u003e\n\u003cp\u003e例えば、商品(item)といった場合に販売ドメインと配送ドメインでは関心事が異なる。販売ドメインでは商品の価格や状態が関心事だが、配送ドメインにおいては同じ「商品」と言ったときでも配送先や配送状況など関心事が異なる。\u003c/p\u003e\n\u003cp\u003e引用: \u003ca href=\"https://little-hands.hatenablog.com/entry/2017/11/28/bouded-context-concept\"\u003ehttps://little-hands.hatenablog.com/entry/2017/11/28/bouded-context-concept\u003c/a\u003e\n\u003cimg src=\"./item-domain.png\" alt=\"Item Domain\"\u003e\u003c/p\u003e\n\u003cp\u003eこの時、DRY を意識して商品という概念(Entity)を使いまわそうとすると、売値・状態・配送先・配送状態など異なるドメインの関心事を全て詰め込み、状況次第で利用するフィールドを変えるというアプローチになる。\u003cbr\u003e\n概念の異なるドメインでリソースを共有すると結合度が上がり、一方のドメインでの変更がもう一方のドメインへ意図せず影響する可能性が高まる。\n例えば商品販売の管理のため内部的な商品名の名付けルールを変えたら配送時にお客様への表示商品名のルールまで変わってしまうなどである。\nこうなると、プログラムの複雑性が高い影響で各ドメインの身動きが取りづらくなり、バグ発生率が高まり変更の実現のサイクルが遅くなってしまう。\u003cbr\u003e\nそこで、多少繰り返し(のような見え方)になろうとも、ドメインごとに独自のリソースを設け、変更の影響範囲を狭め、注目するべき部分を閉じ込めることを重視したい。上記例では販売・配送ごとに独自の商品モデルを定義し、各々に必要な情報だけを認知できる形にする形である。\u003c/p\u003e\n\u003ch1 id=\"go-における-ddd-の実現\"\u003eGo における DDD の実現\u003c/h1\u003e\n\u003cp\u003e最初に結論を紹介すると、Go では以下のような形が良いのではないかと現時点では考えている。まずは説明前に実際のストラクチャを見て欲しい。\u003c/p\u003e\n\u003cp\u003e当然ながらここで例示するものが正解というわけではないし、機能の追加や時間の経過によって有用な形は代わり得る。\u003c/p\u003e\n\u003ch2 id=\"提案アーキテクチャ\"\u003e提案アーキテクチャ\u003c/h2\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-go\"\u003e.\n├── boundedcontextA\n│   └── usecase \u003cspan class=\"hljs-comment\"\u003e// define application usecase\u003c/span\u003e\n│       ├── subdomainA\n│           └── a_usecase.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│           └── b_usecase.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│       ├── subdomainB\n│           └── c_usecase.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│   └── domain \u003cspan class=\"hljs-comment\"\u003e// define domain model\u003c/span\u003e\n│       └── subdomainA\n│           └── model.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e \n│           └── repository.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e \u003cspan class=\"hljs-comment\"\u003e// only interface\u003c/span\u003e\n│           └── service.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│       └── subdomainB\n│           └── model.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e \n│           └── repository.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│           └── service.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│   └── presentation \u003cspan class=\"hljs-comment\"\u003e// API endpoint\u003c/span\u003e\n│       └── a_handler.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│       └── b_handler.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│       └── resolver\n│           └── resolver.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│   └── infrastructure \u003cspan class=\"hljs-comment\"\u003e// impliment repository\u003c/span\u003e\n│       └── datastore\n│       └── externalservice\n│   └── pkg \u003cspan class=\"hljs-comment\"\u003e// general lib for the boundary\u003c/span\u003e\n│       └── apiclient\n│       └── shareditem\n│       └── trace\n│   └── \u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e.mod\n├── boundedcontextB\n│   └── usecase\n│       └── ...\n│   └── domain\n│       └── ...\n│   └── presentation\n│       └── ...\n│   └── infrastructure\n│       └── ...\n│   └── pkg\n│       └── ...\n│   └── \u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e.mod\n├── boundedcontextC\n│   └── ...\n├── server\n│   └── middleware \u003cspan class=\"hljs-comment\"\u003e// common\u003c/span\u003e\n│   └── main.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n├── \u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e.mod\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e基本的な考え方は以下である。\u003c/p\u003e\n\u003cp\u003e方針\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e複数の境界やドメインを同じサービスで提供し得る構成で考える\u003c/li\u003e\n\u003cli\u003estruct や interface のを使う側における見え方を意識する\u003c/li\u003e\n\u003cli\u003eトップレベル以下にコンテキストの境界毎にディレクトリを作る\n\u003cul\u003e\n\u003cli\u003e小ディレクトリに近いストラクチャを持つモジュラモノリスのような構造\u003c/li\u003e\n\u003cli\u003eサービスとしてモノリスで提供する前提だが、必要に応じてマイクロサービスとしてデプロイしたり、リポジトリの分離の容易さを意識\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e補足\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eファイル自体はわかりやすさのために定義しているが、別ファイルを設けることは必須ではなく、また同様の概念(e.g. model)を複数ファイルに分けることもある\u003c/li\u003e\n\u003cli\u003e必要に応じて親・子ディレクトリを追加で設けて柔軟に変更する\u003c/li\u003e\n\u003cli\u003eboundary は\u003ccode\u003esales\u003c/code\u003eや\u003ccode\u003edelivery\u003c/code\u003eのようなビジネスドメイン的な概念もあれば\u003ccode\u003eauthentication\u003c/code\u003eなどのシステム上必要な概念もありえる\u003c/li\u003e\n\u003cli\u003eboundary 毎のモジュール化は必須ではない\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e提案モデルを深掘りする前に、レイヤードアーキテクチャを忠実に再現した場合にどうなるのかを例示し、追って違いを交えつつ説明する。\u003c/p\u003e\n\u003cp\u003e素直なレイヤードアーキテクチャを Go で表現すると以下のようになる。\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-go\"\u003e.\n├── usecase\n│   └── a_usecase.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│   └── b_usecase.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n├── domain\n│   ├── model\n│   ├── repository\n│   │   └── a_repository.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e \u003cspan class=\"hljs-comment\"\u003e// interface\u003c/span\u003e\n│   └── service\n├── infrastructure\n│   └── persistence\n│       └── database\n│           └── a_repository.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e \u003cspan class=\"hljs-comment\"\u003e// impl\u003c/span\u003e\n├── presentation\n│   └── api\n│       └── server\n│           ├── auth\n│           ├── handler\n│           │   ├── a_handler.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│           │   ├── b_handler.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│           │   └── yyy_handler.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│           ├── middleware\n│           └── router\n└── \u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e.mod\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e以下で提案アーキテクチャのポイントを説明する。\u003c/p\u003e\n\u003ch2 id=\"ポイント\"\u003eポイント\u003c/h2\u003e\n\u003ch3 id=\"各レイヤー単位でドメインを考慮したパッケージを作る\"\u003e各レイヤー単位でドメインを考慮したパッケージを作る\u003c/h3\u003e\n\u003cp\u003e提案の例ではレイヤー毎にフラットなディレクトリを作らないこと、またレイヤー毎に近しい要素は同じパッケージ以下に置く事を意識している。\n具体的には、model.go や repository.go を (サブ)ドメイン (以下サブドメインも全てドメインと便宜上表現する) 直下に配置している。\nこうすることで \u003ccode\u003e{domain_name}.{element_name}\u003c/code\u003e という見え方を表現できる。\u003cbr\u003e\nsale というドメイン以下で item の出品と考えると以下のように表現でき、private なフィールドの公開範囲も制限が可能である\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003edomain/sale/\n\u003cul\u003e\n\u003cli\u003esale.Item\u003c/li\u003e\n\u003cli\u003esale.Repository\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003eusecase/sale/\n\u003cul\u003e\n\u003cli\u003esale.PublishUsecase\u003c/li\u003e\n\u003cli\u003esale.DropUsecase\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e他の言語ではパッケージの利用時の見え方は意識しなくても良いものもあるのだが、Go の場合は「パッケージ + 要素名」を利用時に参照することに加え、「パッケージ名は要素の名前に含めない」というプラクティス(✗ item.ItemRepository → ◯ item.Repository) もあるため、必然的に利用時のためのパッケージと要素の配置位置を意識する必要がある。\u003c/p\u003e\n\u003cp\u003eレイヤードアーキテクチャを素直に表現した場合、usecase や repository ディレクトリ以下に全てのリポジトリのインターフェースが以下のように並べられる。\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-go\"\u003e.\n├── usecase\n│   └── delivery_usecase.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│   └── sale_usecase.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n├── domain\n│   ├── model\n│      └── delivery.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│      └── item.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│      └── sale.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│   ├── repository\n│      └── delivery.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│      └── item.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│      └── sale.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eこの場合以下のような点で扱いづらさがある。\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eレイヤーのディレクトリ以下に平坦にファイルを並べると特定のドメインのみに必要なプライベートな要素が他のドメインにも見える\u003c/li\u003e\n\u003cli\u003eリソースを配置するディレクトリがより分散しやすくなる\n\u003cul\u003e\n\u003cli\u003e凝縮度の低下\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003e名付けで 「何であるのか(e.g. repository)」が要素でなく package の方に寄せられる\n\u003cul\u003e\n\u003cli\u003erepository.Delivery、repository.Item \u0026#x3C;\u003e delivery.Repository、item.Repository\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e当然以下のようにレイヤー毎にサブディレクトリを設けることも考えられるが、特にドメイン周りで近しい要素間の循環参照が起きやすく、 import の複雑性を考えたくないため、model, repository (interface), service などは同一階層上で置いてしまった方が扱い易いと考える。\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-go\"\u003e.\n├── usecase\n│   └── delivery\n│      └── usecase.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│   └── sale\n│      └── usecase.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n├── domain\n│   ├── model\n│      └── delivery\n│          └── delivery.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│      └── item\n│          └── item.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│      └── sale\n│          └── sale.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│   ├── repository\n│      └── delivery\n│          └── delivery.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│      └── item\n│          └── item.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│      └── sale\n│          └── sale.\u003cspan class=\"hljs-keyword\"\u003ego\u003c/span\u003e\n│   ├── service\n│      └── delivery\n...\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch3 id=\"bounded-context-によるモジュールの分離\"\u003eBounded context によるモジュールの分離\u003c/h3\u003e\n\u003cp\u003e提案では「境界づけられたコンテキスト」毎にトップディレクトリに配置し、それぞれをモジュール化し、各モジュールを server/main.go から参照する形を想定していた。\u003c/p\u003e\n\u003cp\u003eこの形の利点としては以下である。\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e境界の異なるものは干渉しない\u003c/li\u003e\n\u003cli\u003eリリース時に境界毎の変更を意識せずリリースタイミングを調整しやすい\n\u003cul\u003e\n\u003cli\u003eモジュール化していないとモノレポの場合、master (GitFlow なら develop)ブランチにマージすることは本番化を意味する(Feature Toggleなどを使っていない場合)が、モジュール化すると main.go の go.mod に含めない限り利用されない\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003eチームやプロダクトの成長に伴うサービスの分割がしやすい\n\u003cul\u003e\n\u003cli\u003e境界毎にサービスとして完結した形にすることで main.go を追加するだけで別サービスとしてデプロイできる\n\u003cul\u003e\n\u003cli\u003eサービス規模が大きくなったなどでアクセスの分離がしやすい\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003eメンバー増加に伴い専用のチームを作りリポジトリを分離する場合でも対応が簡単\n\u003cul\u003e\n\u003cli\u003eレイヤー毎に分離されて配置されているとリポジトリ分離のためには複数箇所から関連リソースをかき集める必要がある\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eこの方法には同時にいくつかの欠点も存在する\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eモジュールとして分離すると、全体で利用したいライブラリ (共有カーネル等) をモジュール化してインポートする必要がある\n\u003cul\u003e\n\u003cli\u003eモジュール化していない場合は変更をそのまま参照できる\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003eサービスとしてのテストの手間\n\u003cul\u003e\n\u003cli\u003ego.work によりローカルで別モジュールの開発は簡単になったが、go.work は git 管理しない前提のため、実環境へデプロイするためには main.go の go.mod が tag でなくブランチを参照する必要がある。\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1 id=\"おわりに\"\u003eおわりに\u003c/h1\u003e\n\u003cp\u003e本記事では Go で DDD ベースの実装を行う場合のパッケージストラクチャの案を紹介した。\u003c/p\u003e\n\u003cp\u003eアプローチはチームの大きさやスキル間、サービスの特性によって変えるべきであり、例えばコンテキストを大きく捉えてサブドメインの構成要素を多くモデリングすることで細かくモジュールを分けないといった考え方もあるだろう。\u003c/p\u003e\n\u003cp\u003eまた、今回のストラクチャを深掘りするとコンテキスト内でも \u003ccode\u003esaleitem\u003c/code\u003e (売るための商品) と \u003ccode\u003esolditem\u003c/code\u003e (売れた商品) のドメインを設け、それぞれ別のフィールドを持たせる方が扱いやすい場合もある。\u003c/p\u003e\n\u003cp\u003e一概に正解はないが、ポイントとしては Go では \u003ccode\u003e{domain_name}.{element_name}\u003c/code\u003e という利用者からの見え方を意識し、結合度を下げつつ凝縮度を高める設計をすると良いと考えている。\u003c/p\u003e","title":"Go DDD Package Structure Pattern","date":"2023-08-01","tags":["engineering","go","ddd"],"description":"Go で DDD を表現するのは単純にレイヤードにするのではなく、ドメイン毎にパッケージの見え方を意識して構成をしたほうが良いという考察。","published":true,"company":true}},"__N_SSG":true},"page":"/posts/[slug]","query":{"slug":"go-ddd-package-structure"},"buildId":"zA6gxw_dxFZp1nsazOUt-","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
