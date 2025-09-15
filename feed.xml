@@ -4,9 +4,20 @@
         <description><![CDATA[Posts of ttyfky]]></description>
         <link>https://ttyfky.github.io</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Fri, 05 Sep 2025 09:47:53 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 15 Sep 2025 02:48:41 GMT</lastBuildDate>
         <atom:link href="https://ttyfky.github.io/feed.xml" rel="self" type="application/rss+xml"/>
         <copyright><![CDATA[All rights reserved 2025, ttyfky]]></copyright>
+        <item>
+            <title><![CDATA[実例でみる技術書執筆の流れ]]></title>
+            <description><![CDATA[技術書を執筆し出版するまでの流れの紹介と Re:View について]]></description>
+            <link>https://ttyfky.github.io/posts/book-writing-flow</link>
+            <guid isPermaLink="true">https://ttyfky.github.io/posts/book-writing-flow</guid>
+            <category><![CDATA[book]]></category>
+            <category><![CDATA[book-writing]]></category>
+            <category><![CDATA[engineering-organization-development]]></category>
+            <dc:creator><![CDATA[ttyfky]]></dc:creator>
+            <pubDate>Mon, 15 Sep 2025 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[エンジニアリング組織開発の執筆]]></title>
             <description><![CDATA[拙書「エンジニアリング組織開発」についてのプロモーションとよもやま話]]></description>
